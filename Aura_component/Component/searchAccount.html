@@ -1,0 +1,47 @@
+
+<aura:component controller="searchAccountControllers" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride" access="global" >
+	<aura:attribute name="predictions" type="List" default="[]"/>
+	<aura:attribute name="AccountName" type="String" default="Name" />
+	<aura:attribute name="iconName" type="String" default="standard:account" />
+	<aura:attribute name="recordList" type="list" />
+    <aura:attribute name="close" type="boolean" default="true" />
+	<aura:registerEvent name="LookupEvent" type="c:CustomLookupEvent" />
+	<aura:handler   name="LookupEvent" event="c:CustomLookupEvent" action="{!c.doHandleSearchEvent}" />
+	<aura:if isTrue="{!v.close}">
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+    <div class="slds-modal__container">
+	<header class="slds-modal__header">
+         <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick="{!c.doClose}" title="Close">
+         <lightning:icon iconName="utility:close"  alternativeText="Close" variant="inverse" size="x-small"/>
+         <span class="slds-assistive-text">Close</span>
+      	 </button>
+				<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Search Account</h2>
+			</header>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+				<aura:if isTrue="{!v.selecteRecord == null}">
+					<lightning:input
+                aura:id="searchText"
+                name="searchText"
+                label="Please Enter Account Name"
+                                 type="search"
+                                 onkeyup="{!c.handleKeyUp}"
+                 				/>
+					<br />
+				</aura:if >
+				<aura:iteration items="{!v.recordList}" var="item">
+					<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+						<li role="presentation" class="slds-listbox__item">
+							 <a class= "slds-text-color--default" href="{!'/lightning/r/Account/' + item.Id + '/view'}" target="_self" > {!item.Name}</a>
+						</li>
+					</ul>
+				</aura:iteration>
+			</div>
+			<footer class="slds-modal__footer">
+				 <lightning:button label="Cancel" title="Cancel action" onclick="{! c.doClose }"/>
+                 <lightning:button variant="brand" label="Create New" title="Create New" onclick="{! c.createRecord }" />
+			</footer>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>
