@@ -1,0 +1,48 @@
+.THIS td 
+{
+    border-bottom: 1px solid #ddd;
+    text-align:center;
+    font-family:'Salesforce Sans', Arial, sans-serif;
+    font-size:10px;
+}
+.THIS tr:hover 
+{
+    background-color: #d8edff;
+}
+.THIS th
+{
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align:center;
+    background-color:#F1F1F1;
+    font-size:12px;
+    font-family:'Salesforce Sans', Arial, sans-serif;
+    height:40px;
+   
+}
+.THIS a:link 
+{
+  color: black;
+  text-decoration:underline;
+}
+.THIS a:visited 
+{
+  color: black;
+  text-decoration:underline;
+}
+.THIS a:active
+{
+    color:black;
+}
+.THIS a:hover {
+  color: blue;
+}
+.THIS .all:link 
+{
+  color: blue;
+  text-decoration:none;
+}
+.THIS section
+{
+    width:50%;
+}
