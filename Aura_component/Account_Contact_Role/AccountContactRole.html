@@ -1,0 +1,73 @@
+<aura:component controller="AccountRole" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="accRole" type="list" />
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="acrId" type="String" />
+    <aura:attribute name="title" type="String" />
+    <aura:attribute name="accounts" type="Account" />
+    <aura:attribute name="options" type="map" />
+    <aura:attribute name="delModel" type="boolean" default="false"/>
+    <aura:attribute name="all" type="boolean" default="true"/>
+    <aura:attribute name="newModel" type="boolean" default="false"/>
+    <aura:attribute name="editModel" type="boolean" default="false"/>
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    <lightning:card variant="Narrow" title="{!v.title}" iconName="standard:contact">
+        <aura:set attribute="actions">
+            <lightning:button label="New" variant="brand" onclick="{!c.openNew}"/>
+        </aura:set>
+        <table>
+            <thead>
+                <tr>
+                	<th>Action</th>
+                    <th>Contact Name</th>
+                    <th>Account Account</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                    <th>Primary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.accRole}" var="a" >
+                <tr style=" border-bottom: 1px solid #ddd;">
+                    <td>
+                        <button class="slds-button slds-button_icon slds-button_icon-small  slds-popover__edit" title="Edit"  id="{!a.getAccConRole.Id}" onclick="{!c.doEdit}">
+							<lightning:icon iconName="utility:edit" alternativeText="Edit" variant="normal" size="x-small"/>
+						</button>
+                        |
+                        <button class="slds-button slds-button_icon slds-button_icon-small slds-popover__delete" title="Delete" id="{!a.getAccConRole.Id}" onclick="{!c.doDelete}">
+							<lightning:icon iconName="utility:delete" alternativeText="Delete" variant="normal" size="x-small" />
+						</button>
+                    </td>
+                    <td style="word-wrap: break-word;"><a href="{!'/lightning/r/Contact/' + a.getAccConRole.Contact.Id + '/view'}">{!a.getAccConRole.Contact.Name}</a></td>
+                    <td style="word-wrap: break-word;"><a  href="{!'/lightning/r/Account/' + a.getAccConRole.Contact.Account.Id + '/view'}">{!a.getAccConRole.Contact.Account.Name}</a></td>
+                    <td style="word-wrap: break-word;"><a>{!a.getAccConRole.Contact.Email}</a></td>
+                    <td>{!a.getAccConRole.Contact.Phone}</td>
+                    <td>{!a.getAccConRole.Role}</td>
+                    <td><lightning:input type="checkbox" checked="{!a.getAccConRole.IsPrimary}" disabled="true"/></td>
+                </tr>
+                </aura:iteration>
+            </tbody>
+       </table>
+        <footer class="slds-card__footer">
+            <aura:if isTrue="{!v.all}">
+             <a class="all" onclick="{!c.showAll}">Veiw All</a>
+                <aura:set attribute="else" >
+                <a class="all" onclick="{!c.doInit}">Veiw Less</a>
+                </aura:set>
+            </aura:if>
+  		</footer>
+    </lightning:card>
+    
+    <!-- ==========================Delete Account Role =================== -->
+    <aura:if isTrue="{!v.delModel}">
+         <c:deleteAccountRole  delModels="{!v.delModel}" recordId="{!v.recordId}" acrIds="{!v.acrId}"/>
+    </aura:if>
+    <!-- ==========================Edit Role =================== -->
+    <aura:if isTrue="{!v.editModel}">
+        <c:EditAccountRole  editModels="{!v.editModel}"  accounts="{!v.accounts}" acrIds="{!v.acrId}"/>
+    </aura:if>
+    <!-- ==========================Create New =================== -->
+    <aura:if isTrue="{!v.newModel}">
+        <c:NewAccountRole options="{!v.options}" title="{!v.title}" accounts="{!v.accounts}" accRole="{!v.accRole}"  recordId="{!v.recordId}"  newModels="{!v.newModel}" />
+    </aura:if>
+</aura:component>
