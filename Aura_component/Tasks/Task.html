@@ -1,0 +1,195 @@
+<aura:component controller="TaskController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	<aura:attribute name="heading" type="String" default="Today's Tasks"/>
+	<aura:attribute name="Task" type="List" />
+	<aura:attribute name="today" type="DateTime" />
+	<aura:attribute name="tomorrow" type="DateTime" />
+	<aura:attribute name="yesday" type="DateTime" />
+	<aura:attribute name="showModal" type="boolean" default="false"/>
+	<aura:attribute name="status" type="Map"/>
+	<aura:attribute name="rstatus" type="String" />
+	<aura:attribute name="tskIds" type="String" />
+	<aura:attribute name = "whoId" type="String"/>
+	<aura:attribute name = "tagId" type="String"/>
+	<aura:attribute name="hover" type= "Boolean" default= "false" />
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+	<article class="slds-card">
+		<div class="slds-card__header slds-grid" style="font-family:'Salesforce Sans', Arial, sans-serif">
+			<header class="slds-media slds-media_center slds-has-flexi-truncate">
+				<div class="slds-media__body">
+					<h2 class="slds-card__header-title" >
+						<strong >{!v.heading}</strong>
+					</h2>
+				</div>
+				<div class="slds-no-flex">
+					<lightning:buttonMenu  aura:id="menu" iconName="utility:filter" alternativeText="Show menu" onselect="{!c.handleSelect}">
+						<lightning:menuItem aura:Id="menuitems" label="Today's Tasks" value="MenuItemOne" checked="True" />
+						<lightning:menuItem aura:Id="menuitems" label="My Tasks" value="MenuItemTwo" checked="false" />
+						<lightning:menuItem aura:Id="menuitems" label="All Overdue Tasks" value="MenuItemThree" checked="false" />
+						<lightning:menuItem aura:Id="menuitems" label="Completed Within Last 7 Days" value="MenuItemFour" checked="false" />
+					</lightning:buttonMenu>
+				</div>
+			</header>
+		</div>
+<aura:if isTrue= "{!not(empty(v.Task))}">
+    <aura:iteration var="tsk" items="{!v.Task}">
+     <div class="slds-grid slds-gutters slds-p-top_small" style="width:90%;margin-left:20px;">
+            <div class="slds-size_1-of-12 slds-text-align_right">
+                <label class="slds-checkbox open">
+					<div class="slds-checkbox">
+                    <aura:if isTrue="{!tsk.getTask.Status == 'Completed'}">
+					<input type="checkbox" id="{!tsk.getTask.Id}" onchange="{!c.onChange}" checked="true" />
+					  <aura:set attribute="else">
+                          <input type="checkbox" id="{!tsk.getTask.Id}" onchange="{!c.onChange}" checked="false"/>
+                        </aura:set>
+                        </aura:if>
+                          <span class="slds-checkbox_faux"></span>&nbsp;
+					</div>
+				</label>
+            </div>
+            <div class="slds-size_6-of-12 slds-text-align_left" >
+             <a class= "slds-text-color--default" href="{!'/lightning/r/Task/' + tsk.getTask.Id + '/view'}" target="_self" >
+                 <aura:if isTrue="{!tsk.getTask.Status == 'Completed'}">
+                 <span Id="{!tsk.getTask.Id +'atag'}" style=" text-decoration: line-through">{!tsk.getTask.Subject}</span>
+                  <aura:set attribute="else">
+                      <span Id="{!tsk.getTask.Id +'atag'}">{!tsk.getTask.Subject}</span>
+                     </aura:set>
+                 </aura:if>
+             </a>
+         </div>
+            <div class="slds-size_5-of-12 slds-text-align_right" style="font-size:12px;font-family:'Salesforce Sans', Arial, sans-serif">
+                <aura:if isTrue="{!tsk.flag == true}">
+                <aura:if isTrue= "{!tsk.getTask.ActivityDate == v.today}">
+                <span title="{!tsk.getTask.ActivityDate}">Today</span>
+                <aura:set attribute="else">
+                <aura:if isTrue= "{!tsk.getTask.ActivityDate == v.yesday}">
+                <span title="{!tsk.getTask.ActivityDate}" Id="{!tsk.getTask.Id +'tag'}">Yesterday</span>
+                <aura:set attribute="else">
+                <aura:if isTrue= "{!tsk.getTask.ActivityDate == v.tomorrow}">
+                <span title="{!tsk.getTask.ActivityDate}">Tomorrow</span>
+                <aura:set attribute="else">     
+                <span title="{!tsk.getTask.ActivityDate}" Id="{!tsk.getTask.Id +'tag'}">
+                <lightning:formattedDateTime value="{!tsk.getTask.ActivityDate}"  month="short" day="2-digit"/>	
+                </span>
+                </aura:set>
+                </aura:if>
+                </aura:set>
+                </aura:if>
+                </aura:set>
+                </aura:if>
+                <aura:set attribute="else">
+                    <aura:if isTrue= "{!tsk.getTask.ActivityDate == v.today}">
+                    <span title="{!tsk.getTask.ActivityDate}">Today</span>
+                    <aura:set attribute="else">
+                    <aura:if isTrue= "{!tsk.getTask.ActivityDate == v.yesday}">
+                    <span class="slds-truncate slds-text-color_error" title="{!tsk.getTask.ActivityDate}">
+                    <strong  Id="{!tsk.getTask.Id +'tag'}">Yesterday</strong>
+                    </span>
+                    <aura:set attribute="else">
+                    <aura:if isTrue= "{!tsk.getTask.ActivityDate == v.tomorrow}">
+                    <span title="{!tsk.getTask.ActivityDate}">Tomorrow</span>
+                    <aura:set attribute="else">
+                    <aura:if isTrue= "{!tsk.getTask.ActivityDate > v.tomorrow}">
+                    <span title="{!tsk.getTask.ActivityDate}">
+                    <lightning:formattedDateTime value="{!tsk.getTask.ActivityDate}"  month="short" day="2-digit"/>
+                    </span>
+                    <aura:set attribute="else">
+                    <span class="slds-truncate slds-text-color_error" title="{!tsk.getTask.ActivityDate}"  Id="{!tsk.getTask.Id +'tag'}">
+                    <strong><lightning:formattedDateTime value="{!tsk.getTask.ActivityDate}"  month="short" day="2-digit"/></strong>    	
+                    </span>
+                    </aura:set>
+                    </aura:if>
+                    </aura:set>
+                    </aura:if>
+                    </aura:set>
+                    </aura:if>
+                    </aura:set>
+                    </aura:if>
+                </aura:set>
+                </aura:if>
+            </div>
+      </div>                
+      <div class="slds-grid slds-gutters slds-p-top_xxx-small" style="width:90%;margin-left:20px;">
+         <div class="slds-size_1-of-12">
+         </div>
+         <div class="slds-size_6-of-12 slds-text-align_left">
+         <span title="{!tsk.getTask.Who.Name}">
+         <a class=" outputLookupLink" Id="{!tsk.getTask.Id}" style="text-decoration:underline;text-decoration-style:dotted" 
+            onmouseover="{!c.mouseOver}" onmouseout="{!c.mouseOut}" href="{!'/lightning/r/Lead/' + tsk.getTask.WhoId + '/view'}" target="_self" 
+            data-attriVal="{!tsk.getTask.WhoId}">{!tsk.getTask.Who.Name}</a>			    
+         </span>
+            <aura:if isTrue= "{! v.tagId==tsk.getTask.Id}">
+                <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12" style="position:absolute; margin-left:40px;margin-top:-90px;">
+				<aura:if isTrue= "{!and(v.hover,v.whoId == tsk.getTask.WhoId)}">
+                    <c:LeadHover whoId="{!v.whoId}" hover="{!v.hover}"	/>				
+				</aura:if>
+				</div>
+            </aura:if>
+         </div>
+         <div class="slds-size_5-of-12 slds-text-align_right">
+         </div>
+      </div>
+  </aura:iteration>
+    <aura:set attribute="else">
+           	<aura:if isTrue= "{!v.heading == 'Today\'s Tasks'}">
+				<div class="slds-grid slds-wrap">
+				<div class="empty-state-container slds-text-align_center" style="width: 90%;margin-left:25px;">
+				<img src="/projRes/ui-home-private/emptyStates/noTasks.svg" aria-hidden="true" style="max-width:100%;height: auto;vertical-align: middle;"/>
+				<br /><br />
+				<p>Nothing due today. Be a go-getter, and check back soon. </p>
+				</div>
+				</div>
+                <aura:set attribute= "else">
+                    <div class="slds-grid slds-wrap">
+				<div class="empty-state-container slds-text-align_center" style="width: 90%;margin-left:25px;">
+				<img src="/projRes/ui-home-private/emptyStates/noTasks.svg" aria-hidden="true" style="max-width:100%;height: auto;vertical-align: middle;"/>
+				<br /><br />
+				<p>You don’t have any tasks in this list. Look in a different list, or create a task. </p>
+				</div>
+				</div>
+                </aura:set>
+			</aura:if>
+	</aura:set>
+</aura:if>
+        <footer class="slds-card__footer">
+			<lightning:formattedUrl value="/lightning/o/Task/home" label = "View All" target="_self"/>
+		</footer>
+    </article>
+    <!-- ========================$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$=============== -->
+	<aura:if isTrue="{!v.showModal}">
+		<section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open " aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-normal" title="Close">
+						
+                        <span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Choose Status</h2>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<fieldset class="slds-form-element">
+						<lightning:layout >
+							<lightning:layoutItem padding="around-small">
+								<legend class="slds-form-element__legend slds-form-element__label">Select a Status</legend>
+							</lightning:layoutItem>
+							<lightning:layoutItem padding="around-small">
+								<lightning:radioGroup name="radioGroup"
+                      	  id="{!v.tskIds}"
+                          options="{! v.status }"
+                          value="{! v.Task.Status }"
+                          type="radio"
+                      	  onchange="{!c.getRadioValue}"
+                                                      
+                          />
+							</lightning:layoutItem>
+						</lightning:layout>
+					</fieldset>
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick="{!c.closeModel}">Cancel</button>
+					<button class="slds-button slds-button_brand" onclick="{!c.saveTask}">Save</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</aura:if>
+</aura:component>
