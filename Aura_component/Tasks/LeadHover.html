@@ -1,0 +1,52 @@
+<aura:component  Controller="TaskController" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+	<aura:attribute name = "whoId" type="String"/>
+    <aura:attribute name ="Lead" type="Lead[]" />
+    <aura:attribute name="hover" type= "Boolean" default= "true" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/> 
+    <aura:if isTrue="{!v.hover}">
+    <section role="dialog" aria-describedby="dialog-heading-id-121" aria-label="Dialog Title" class="slds-popover slds-nubbin_left slds-popover_large sections">
+	<button class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close" title="Close dialog" onclick="{!c.doClose}">
+	x
+	</button>
+	<aura:iteration var="l" items="{!v.Lead}">
+	<div class="slds-popover__body" id="dialog-heading-id-121">
+	<header >
+	<h2 class="slds-text-heading_small" id="dialog-heading-id-121">
+	<lightning:icon iconName="standard:lead" alternativeText="Lead" />
+    <a  href="{!'/lightning/r/Lead/' + l.Id + '/view'}" target="_self" style="color:black;padding-left:10px; font-size: larger;">
+		{!l.Name}</a></h2></header><br />
+	<div class="slds-grid slds-gutters">
+	<div class="slds-col slds-size_3-of-6">
+	<span>
+		<h3>Title</h3>
+        <p>{!l.Title}</p>
+		</span>
+		</div>
+	<div class="slds-col slds-size_3-of-6">
+		<span>
+		<h3>Company</h3>
+		<p>{!l.Company}</p>
+		</span>
+	</div>
+		</div><br />
+	<div class="slds-grid slds-gutters">
+	<div class="slds-col slds-size_3-of-6">
+		<span>
+		<h3>Phone</h3>
+		<p>{!l.Phone}</p>
+		</span>
+	</div>
+	<div class="slds-col slds-size_3-of-6">
+		<span>
+		<h3>Mobile</h3>
+		<p>{!l.MobilePhone}</p>
+		</span><br />
+	</div>
+	</div>
+	</div>
+	</aura:iteration>
+	</section>
+    
+    
+    </aura:if>
+</aura:component>
