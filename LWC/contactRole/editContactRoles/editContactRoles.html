@@ -1,0 +1,44 @@
+<template>
+<template if:true={shows}>
+<section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small">
+    <div class="slds-modal__container">
+    <header class="slds-modal__header slds-modal__header_empty">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+            <lightning-icon icon-name="utility:close" variant='inverse' size="small" onclick={doClose}></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+        </button>
+    </header>
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+    <lightning-card  variant="Narrow"  title={title} icon-name="standard:account">
+    <div class="slds-grid slds-wrap" id="model">
+        <div class="slds-col slds-size_1-of-12"></div>
+            <div class="slds-col slds-size_5-of-12 slds-p-around_small " >
+                <c-editcontactrolelookupfield contactname={contactname} onselectedcontactid={selectedContact}></c-editcontactrolelookupfield>
+            </div>
+            <div class="slds-col slds-size_5-of-12 slds-p-around_small">
+                <lightning-combobox 
+                    class="spencer_combobox"
+                    variant="label-hidden" 
+                    value={contactrole}
+                    placeholder="Select Role"
+                    options={fields}
+                    onchange={onValueSelection}
+                ></lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-12"></div>
+            <div class="slds-col slds-size_1-of-12"></div>
+            <div class="slds-col slds-size_11-of-12 slds-p-around_small">
+                <lightning-input type="checkbox" label="Primary" checked={isprimary} onchange={onCheck}></lightning-input>
+            </div>
+            </div>
+    </lightning-card>
+    </div>
+    <footer class="slds-modal__footer">
+    <button class="slds-button slds-button_neutral" onclick={doClose}>Cancel</button>
+    <button class="slds-button slds-button_brand" onclick={updateRecord}>Save</button>
+    </footer>
+    </div>
+</section>
+<div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+</template>
