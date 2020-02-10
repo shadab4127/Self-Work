@@ -1,0 +1,18 @@
+<apex:page controller="DeleteRcords" sidebar="false">
+   <apex:form id="form">
+    <apex:pageBlock >
+      <apex:pageBlockTable value="{!AllContact}" var="Con">
+     
+      <apex:column >
+          <apex:commandLink value="Delete" action="{!deleteRecord}" reRender="form">
+            <apex:param name="AccountToDelete" 
+              value="{!Con.Id}" 
+              assignTo="{!RecordToDelete}"/>
+          </apex:commandLink>
+        </apex:column>
+        <apex:column value="{!Con.Name}"/>
+       
+      </apex:pageBlockTable>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

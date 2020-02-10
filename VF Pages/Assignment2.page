@@ -1,0 +1,32 @@
+<apex:page controller="controller2">
+  <apex:form id="form">
+    <apex:pageBlock >
+      <apex:pageBlockTable value="{!AllContacts}" var="con">
+        
+        <apex:column headerValue="Action">
+            <apex:outputPanel rendered="{!outputviewer}">
+          <apex:commandButton value="Delete" action="{!deleteRecord}" reRender="form" onclick="confirm('Do you want to delete ?')">
+            <apex:param name="RecordToDelete" 
+              value="{!con.Id}" 
+              assignTo="{!RecordToDelete}"/>
+          </apex:commandButton>
+           <apex:commandButton value="Edit Record" action="{!updateRecord}" reRender="form" onclick="confirm('Do you want to Upadate?')">
+            
+          </apex:commandButton>
+            </apex:outputPanel>
+        </apex:column>
+        <apex:column value="{!con.Name}"/>
+        
+          
+        <apex:column >
+        <apex:outputPanel rendered="{!inputviewer}">
+        <apex:inputtext value="{!con.Name}" />
+        <apex:commandButton value="Save" action="{!doSave}" reRender="form" />
+        <apex:commandButton value="Cancel" action="{!doCancel}" reRender="form" />
+        </apex:outputPanel>
+        </apex:column>
+        
+      </apex:pageBlockTable>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

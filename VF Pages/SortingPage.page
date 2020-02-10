@@ -1,0 +1,35 @@
+<apex:page controller="contactSort">
+<apex:sectionHeader title="Sorting Contact"/>
+  <apex:form >
+      <apex:pageBlock id="block1">
+     
+         <apex:pageBlockTable value="{!AllContacts}" var="con">
+         <apex:column style="height:40px;">
+         <apex:facet name="header">   
+           <apex:commandLink action="{!AllContacts}" value="Name{!IF(sortExpression=='name',IF(sortDirection='ASC','▼','▲'),'')}" reRender="block1">
+             <apex:param value="name" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+         <apex:outputField value="{!con.Name}" />
+       </apex:column>
+       
+       <apex:column value="{!con.Phone}">
+         <apex:facet name="header">
+           <apex:commandLink action="{!AllContacts}" value="Phone{!IF(sortExpression=='Phone',IF(sortDirection='ASC','▼','▲'),'')}" reRender="block1">
+             <apex:param value="Phone" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+       </apex:column>
+       
+       <apex:column value="{!con.Email}">
+       <apex:facet name="header">
+           <apex:commandLink action="{!AllContacts}" value="Email{!IF(sortExpression=='Email',IF(sortDirection='ASC','▼','▲'),'')}" reRender="block1">
+           <apex:param name="name" value="Email" assignTo="{!sortExpression}" />
+           </apex:commandLink>
+       </apex:facet>
+       </apex:column>
+       
+          </apex:pageBlockTable>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

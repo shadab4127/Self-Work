@@ -1,0 +1,28 @@
+<apex:page Controller="controller4">
+    <apex:pageBlock >
+       <apex:pageBlockSection columns="1" title="Accounts">
+           <apex:pageBlockTable value="{!Accounts}" var="a">
+           <apex:column >
+           <apex:outputField value="{!a.Name}"/>
+           </apex:column>
+                <apex:column >
+           <apex:outputField value="{!a.AccountNumber}"/>
+           </apex:column>
+                <apex:column >
+           <apex:outputField value="{!a.Type}"/>
+           </apex:column>
+                <apex:column >
+           <apex:outputField value="{!a.Rating}"/>
+           </apex:column> 
+           </apex:pageBlockTable>     
+       </apex:pageBlockSection>
+    </apex:pageBlock>
+    <apex:pageBlock >
+            <apex:relatedList list="Contacts"/>
+
+            <apex:relatedList list="Opportunities"/>
+
+            <apex:relatedList list="Cases"/>
+
+    </apex:pageBlock>
+</apex:page>

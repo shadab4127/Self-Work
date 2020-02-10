@@ -1,0 +1,71 @@
+<apex:page controller="Controller1">
+    
+    <!--Crfeate a search button having three boxes i.e. first name last name, and email. Now on click of search button corresponding contacts will be displayed.
+    -->
+    <apex:form id="form">
+    <apex:pageBlock id="block1" mode="edit">
+        <apex:pageBlockSection >
+            
+            
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel for="Text1">Search By Name or Email or Phone</apex:outputLabel>
+            <apex:panelGroup >
+                <apex:inputText id="Text1" value="{!Name}" required="true" />
+                <apex:commandButton value="Search!" action="{!doSearch}" reRender="block1,details,pbs3" status="status"/>
+            </apex:panelGroup>
+            </apex:pageBlockSectionItem>
+            
+            
+            
+            
+            
+            <apex:pageBlockSectionItem >
+            <apex:actionStatus id="status">
+            <apex:facet name="start">
+            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 2% 20%">
+            <img src="https://martjackassests.azureedge.net/css/themes/mjt02012504/images/main/show_loader.gif" width="200px" height="250px" />
+            </div>
+            </apex:facet>
+            </apex:actionStatus>
+            </apex:pageBlockSectionItem>
+            
+                        
+        </apex:pageBlockSection>
+        
+        
+        <apex:pageBlockSection title="Contacts" id="pbs3" columns="1">
+            <apex:pageBlockTable value="{!ContResults}" var="con" rendered="{!NOT(ISNULL(ContResults))}">
+                
+                
+                <apex:column headerValue="Action">
+                    
+                    <apex:commandButton value="Delete" action="{!DeleteRecord}" reRender="block1,details,pbs3">
+                        
+                    <apex:param name="ContactToDelete" value="{!con.Id}" assignTo="{!DeleteToRecord}" />
+                    
+                    </apex:commandButton>
+                    
+                    <apex:commandButton value="Edit" action="{!EditRecord}" reRender="block1,details,pbs3">
+                        
+                    <apex:param name="ContactToEdit" value="{!con.Id}" assignTo="{!EditToRecord}" />
+                    
+                    </apex:commandButton>
+                        
+                </apex:column>
+                
+                              
+               <apex:column headerValue="Name">
+                <apex:commandLink reRender="details" value="{!con.Name}">
+                <apex:param name="Id" value="{!con.Id}" id="cid"/>
+                </apex:commandLink>
+            </apex:column>
+                
+                 <apex:column value="{!con.email}"/>
+                 <apex:column value="{!con.phone}"/>
+                
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>   
+    </apex:pageBlock>
+         
+    </apex:form>
+</apex:page>

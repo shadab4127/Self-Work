@@ -1,0 +1,15 @@
+<apex:page controller="WrapperOpp" >
+  <apex:form >
+    <apex:pageBlock >
+     <apex:pageBlockSection >
+            <apex:selectList value="{!SelectedValue}" size="1">
+              <apex:selectOptions value="{!Accs}"/>
+               <apex:actionSupport event="onchange" action="{!refresh}" reRender="OppTable"/>
+            </apex:selectList>
+            <apex:pageBlockTable value="{!Opplist}" id="OppTable" var="o">
+            <apex:column value="{!o.opp.Name}"/>
+            </apex:pageBlockTable>
+     </apex:pageBlockSection>
+    </apex:pageBlock>
+   </apex:form>
+</apex:page>

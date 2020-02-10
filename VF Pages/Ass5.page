@@ -1,0 +1,29 @@
+<apex:page controller="listaccountwrapperclass">
+    
+    
+    <apex:pageBlock tabStyle="Account">
+        <apex:pageBlockSection title="Account Details" columns="1">
+            <apex:repeat value="{!listacc}" var="accWrap">
+                <apex:outputText value="Account Name : {!accWrap.acct.name}"/><br/>
+                <apex:outputText value="Account Type : {!accWrap.acct.type}"/>
+                
+                <apex:pageBlockSection title="List of Contacts" columns="1">
+                    <apex:repeat value="{!accWrap.listcon}" var="acc">
+                        <apex:outputText value="{!acc.firstName}" />
+                    </apex:repeat>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="List of Opportunities" columns="1">
+                    <apex:repeat value="{!accWrap.listopp}" var="acb">
+                        <apex:outputText value="{!acb.Name}" />
+                    </apex:repeat>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="List of Cases" columns="1">
+                    <apex:repeat value="{!accWrap.listcas}" var="acd">
+                        <apex:outputText value="{!acd.status}" />
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:repeat>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+</apex:page>

@@ -1,0 +1,16 @@
+<apex:page controller="ApexParamDemoController">
+  <apex:form id="form">
+    <apex:pageBlock >
+      <apex:pageBlockTable value="{!AllAccounts}" var="Acc">
+        <apex:column value="{!Acc.Name}"/>
+        <apex:column >
+          <apex:commandButton value="Delete" action="{!deleteRecord}" reRender="form">
+            <apex:param name="AccountToDelete" 
+              value="{!Acc.Id}" 
+              assignTo="{!RecordToDelete}"/>
+          </apex:commandButton>
+        </apex:column>
+      </apex:pageBlockTable>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

@@ -1,0 +1,45 @@
+<apex:page controller="standardsetctrl">
+    <apex:form >
+        <apex:pageBlock >
+    <apex:pageBlockSection columns="2">
+    <font>
+        <apex:facet name="header">
+            <span style="color:black">Account details</span>
+        </apex:facet>     
+    </font> 
+        <apex:outputField value="{!acc.name}"/>
+        <apex:outputField value="{!acc.phone}"/>
+        <apex:outputField value="{!acc.Industry}"/>
+    </apex:pageBlockSection>
+    </apex:pageBlock>
+    <apex:pageBlock title="Contacts" id="pbt">     
+        <apex:pagemessages />        
+      <apex:pageBlockSection columns="1" id="ps">
+      <font>
+        <apex:facet name="header">
+            <span style="color:black">Contact - Page #{!pageNumber}of {!totalPages}</span>
+        </apex:facet>     
+      </font>
+      <apex:outputPanel id="pb1">
+        <apex:pageBlockTable value="{!Categories}" var="c" id="pg">
+          <apex:column width="25px">                        
+                        <apex:inputCheckbox value="{!c.checked}" id="inputId"/>
+                    </apex:column>
+          <apex:column value="{!c.cat.Name}" headerValue="Name"/>
+           <apex:column value="{!c.cat.phone}" headerValue="phone"/>
+            <apex:column value="{!c.cat.email}" headerValue="email"/>
+        </apex:pageBlockTable>        
+        </apex:outputPanel>        
+      </apex:pageBlockSection>
+           <apex:pageBlockButtons location="top">
+        <apex:commandButton action="{!process}" value="Delete" rerender="pbt" />         
+      </apex:pageBlockButtons>  
+    </apex:pageBlock>
+    <apex:panelGrid columns="4">
+    <apex:commandLink action="{!first}" dir="RTL">first</apex:commandlink>
+    <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" Dir="LTR">previous</apex:commandlink>
+    <apex:commandLink action="{!next}" rendered="{!hasNext}">next</apex:commandlink>
+    <apex:commandLink action="{!last}">Last</apex:commandlink>
+    </apex:panelGrid>  
+    </apex:form>
+</apex:page>

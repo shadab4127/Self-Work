@@ -1,0 +1,28 @@
+<apex:page controller="MultipleContact" sidebar="false">
+<apex:form >
+<apex:pageBlock >
+<apex:pageBlockTable value="{!listContact}" var="cnct" id="ref">
+<apex:column headervalue="Last Name">
+<apex:inputfield value="{!cnct.con.LastName}"/>
+</apex:column>
+<apex:column headervalue="First Number">
+<apex:inputfield value="{!cnct.con.FirstName}"/>
+</apex:column>
+<apex:column headervalue="Email">
+<apex:inputfield value="{!cnct.con.Email}"/>
+</apex:column>
+<apex:column headervalue="Title">
+<apex:inputfield value="{!cnct.con.title}"/>
+</apex:column>
+<apex:column headervalue="RemoveContact">
+<apex:inputCheckbox value="{!cnct.isSelected}"/>
+</apex:column>
+</apex:pageBlockTable>
+<apex:pageblockbuttons >
+<apex:commandButton value="Add More Contact" action="{!addContact}" reRender="ref" />
+<apex:commandButton value="Save Contact" action="{!SaveContact}"/>
+<apex:commandButton value="Remove Contact" action="{!RemoveContact}"/>
+</apex:pageblockbuttons>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

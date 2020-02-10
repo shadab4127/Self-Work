@@ -1,0 +1,30 @@
+<apex:page standardController="Account" extensions="wrapperAccountController">
+    <apex:form >
+        <apex:pageBlock mode="maindetail">
+            <apex:pageBlockSection Title="Account Information" collapsible="false" columns="2">
+                
+                <apex:outputField value="{!account.Name}" label="Account Name"/>
+                <apex:outputField value="{!account.Type}" label="Type"/>
+                <apex:outputField value="{!account.Phone}" label="Phone"/>
+                
+                <apex:outputField value="{!account.BillingStreet}"/>
+                <apex:outputField value="{!account.BillingCity}"/>
+                <apex:outputField value="{!account.BillingState}"/>
+                <apex:outputField value="{!account.BillingPostalCode}"/>
+                <apex:outputField value="{!account.BillingCountry}"/>
+            </apex:pageBlockSection>   
+        </apex:pageBlock>
+       
+    </apex:form>
+     <apex:pageblock >
+        <apex:pageBlockSection columns="1">
+                <apex:relatedList list="Contacts"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1">
+                <apex:relatedList list="Opportunities"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1">
+                <apex:relatedList list="Cases"/>
+            </apex:pageBlockSection>
+        </apex:pageblock>
+</apex:page>

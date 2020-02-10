@@ -1,0 +1,20 @@
+<apex:page controller="testwrapper">
+  <apex:form >
+ <apex:pageBlock >
+ <apex:pageBlockButtons >
+ <apex:commandButton value="Delete" action="{!deleter}" reRender="form" />
+ </apex:pageBlockButtons> 
+ <apex:pageBlockTable value="{!accountwrapperList}" var="a" id="form">
+  <apex:column >
+  <apex:inputCheckbox value="{!a.selected}" id="Name" />
+  </apex:column>
+   <apex:column >
+     <apex:outputLabel for="Name">
+       {!a.acc.Name}
+       </apex:outputLabel>
+     </apex:column>
+  <apex:column value="{!a.acc.id}"/>
+  </apex:pageBlockTable>
+ </apex:pageBlock>
+  </apex:form>
+</apex:page>

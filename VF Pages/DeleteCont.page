@@ -1,0 +1,29 @@
+<apex:page controller="DeleteContacts">
+<apex:form >
+<apex:pageblock >
+<apex:pageblockTable value="{!listcon}" var="c">
+<apex:column value="{!c.lastname}"/>
+<apex:column >
+<apex:outputPanel rendered="{!outputviewer}"> 
+<apex:commandLink value="Edit" action="{!editer}"/>
+</apex:outputPanel>
+</apex:column>
+<apex:column >
+<apex:outputPanel rendered="{!outputviewer}"> 
+			<apex:commandLink value="Delete" action="{!deleteRecord}" reRender="form">
+            <apex:param name="AccountToDelete" 
+              value="{!c.Id}" 
+              assignTo="{!RecordToDelete}"/>
+          </apex:commandLink>
+</apex:outputPanel>
+</apex:column>
+<apex:column >
+  <apex:outputPanel rendered="{!inputviewer}"> 
+  <apex:inputtext value="{!c.Name}"/>
+  <apex:commandButton value="Save" action="{!Save}"/>
+  </apex:outputPanel>
+</apex:column>
+</apex:pageblockTable>
+</apex:pageblock>
+</apex:form>
+</apex:page>

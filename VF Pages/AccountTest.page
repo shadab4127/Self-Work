@@ -1,0 +1,19 @@
+<apex:page controller="conacc" >
+
+<apex:form >
+    <table>
+             <apex:repeat value="{!wrapper}" var="wrap">
+            <apex:repeat value="{!wrap.conRec1}" var="w">
+            <tr>
+                
+
+          
+             <td>
+                          <apex:outputfield value="{!w.name}"/> 
+               </td>
+               </tr>
+            </apex:repeat>
+            </apex:repeat>
+   </table>   
+</apex:form>
+</apex:page>

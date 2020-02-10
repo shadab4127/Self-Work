@@ -1,0 +1,31 @@
+<apex:page docType="HTML-5.0" controller="PaginationController" sidebar="false">
+<apex:sectionHeader title="Accounts" subtitle="Account Name"/>
+    <apex:form id="form">
+        <apex:pageBlock title="All Account" tabStyle="Account" id="block1">
+            <apex:pageBlockTable value="{!AllAccounts}" var="acc">
+                <apex:column headerValue="SL.No"/>
+                <apex:column headerValue="Name" value="{!acc.Name}"/>
+                <apex:column headerValue="Account Number" value="{!acc.AccountNumber}"/>
+                <apex:column headerValue="Phone" value="{!acc.Phone}"/>
+                <apex:column headerValue="Type" value="{!acc.Type}"/>
+            </apex:pageBlockTable>
+            
+                <apex:pageBlockButtons >
+                     <apex:outputPanel style="text-align:center;margin-right:50%;" layout="block">
+                     <apex:commandButton value="First" action="{!first}"  reRender="block1" status="status1" disabled="{!Prev}" />
+                     <apex:commandButton value="Previous" action="{!Previous}" reRender="block1" status="status1" disabled="{!Prev}" />
+                     <apex:commandButton value="Next" action="{!Next}" reRender="block1" status="status1" disabled="{!Nxt}" />
+                     <apex:commandButton value="Last" action="{!last}" reRender="block1" status="status1" disabled="{!Nxt}" />
+                        <apex:actionStatus id="status1">
+                        <apex:facet name="start">
+                            <img src="/img/loading32.gif" style="width: 18px;"/>    
+                        </apex:facet>
+                        </apex:actionStatus>
+                     </apex:outputPanel>
+                </apex:pageBlockButtons>
+            
+        </apex:pageBlock>
+    
+    </apex:form>
+
+</apex:page>
