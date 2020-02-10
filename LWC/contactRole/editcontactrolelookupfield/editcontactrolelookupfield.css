@@ -1,1 +1,13 @@
-
+.slds-combobox_container{
+    height: 38px;
+}
+.slds-pill__action{
+    width: 261px;
+    height: 29px;
+    line-height: 24px;
+    margin-left: 3px;
+}
+.slds-pill__icon_container{
+    margin-left: 5px;
+    margin-top: -1px;
+}
